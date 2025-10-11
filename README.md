@@ -1,4 +1,4 @@
-# Serene Notes — Local Note-taking App
+# Serene Notes — Local Note-taking App made by AI
 
 This project is a simple, client-side note-taking app that stores notes in your browser's localStorage and keys them to a device ID (or a manual serial you enter).
 
@@ -42,4 +42,5 @@ Usage:
 ```powershell
 cd 'C:\Website Projects\serene-cafe-website'
 .\detect-and-open.bat
+
 ```
