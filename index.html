@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Notes — Serene Notes App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="container header-grid">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="brand" id="brand-text">Serene Notes</div>
+        <button id="edit-brand" class="btn ghost" title="Edit brand">Edit</button>
+        <input id="brand-input" class="hidden" placeholder="App name">
+      </div>
+      <div class="header-actions">
+        <input id="file-input" type="file" accept=".txt" style="display:none">
+        <button class="btn" id="upload-btn">Upload .txt</button>
+        <button class="btn primary" id="new-note">New Note</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="app container app-grid">
+    <aside class="sidebar">
+      <div class="folder-manager">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <strong>Your Folders</strong>
+          <div>
+            <button id="add-folder" class="btn">Add</button>
+            <button id="delete-folder" class="btn ghost">Delete</button>
+          </div>
+        </div>
+        <div style="margin-top:8px;display:flex;gap:8px">
+          <input id="folder-name-input" placeholder="New folder name" style="flex:1;padding:8px;border-radius:6px;border:1px solid rgba(0,0,0,0.06)">
+        </div>
+        <ul id="folders-ul" style="margin-top:8px;max-height:120px;overflow:auto;padding:6px 0"></ul>
+      </div>
+
+      <div class="device-box">
+        <label>Device ID</label>
+        <div class="device-row">
+          <input id="device-id" readonly>
+          <button id="copy-id">Copy</button>
+        </div>
+        <small class="muted">Or enter a device serial to bind notes to a specific device:</small>
+        <div class="device-row">
+          <input id="device-serial-input" placeholder="Enter serial (optional)">
+          <button id="set-serial">Set</button>
+        </div>
+      </div>
+
+      <div class="notes-list">
+        <div class="notes-list-header">
+          <strong>Your Notes</strong>
+          <input id="search" placeholder="Search notes">
+        </div>
+        <ul id="notes-ul"></ul>
+      </div>
+
+      <div class="drafts-list" style="margin-top:12px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <strong>Drafts</strong>
+        </div>
+        <ul id="drafts-ul" style="margin-top:8px;max-height:160px;overflow:auto;padding:6px 0"></ul>
+      </div>
+
+      <div class="notes-actions">
+        <button id="export-json" class="btn ghost">Export All</button>
+        <input id="import-file" type="file" accept="application/json" style="display:none">
+        <button id="import-json" class="btn">Import</button>
+      </div>
+    </aside>
+
+    <main class="editor-area">
+      <div class="editor-toolbar">
+        <input id="note-title" placeholder="Note title">
+        <div class="toolbar-actions">
+          <button id="save-note" class="btn primary">Save</button>
+          <button id="save-draft" class="btn">Save Draft</button>
+          <button id="download-note" class="btn">Download</button>
+          <button id="delete-note" class="btn ghost">Delete</button>
+        </div>
+      </div>
+
+      <div class="editor-split">
+        <textarea id="editor" placeholder="Write or load a note here..."></textarea>
+        <div class="preview">
+          <div class="preview-top">
+            <strong>Preview</strong>
+            <div class="mapping-actions">
+              <input id="map-word" placeholder="word to color">
+              <input id="map-color" type="color" value="#1e90ff">
+              <button id="add-mapping" class="btn">Add</button>
+            </div>
+          </div>
+          <div id="preview" class="preview-content"></div>
+          <div class="mappings-list">
+            <strong>Mappings</strong>
+            <ul id="mappings-ul"></ul>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <footer class="site-footer container">
+    <small class="muted">Notes are stored locally in your browser and keyed to your device ID. You can export/import JSON.</small>
+  </footer>
+
+  <!-- Folder selection modal -->
+  <div id="folder-modal" class="modal hidden" aria-hidden="true" style="display:none">
+    <div class="modal-backdrop"></div>
+    <div class="modal-card">
+      <h3>Save note to folder</h3>
+      <p class="muted">Choose a folder to save this note in, or save without a folder.</p>
+      <select id="folder-select" style="width:100%;padding:8px;border-radius:8px;margin:8px 0"></select>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
+        <button id="modal-save-no-folder" class="btn ghost">Save without folder</button>
+        <button id="modal-save-folder" class="btn primary">Save to folder</button>
+        <button id="modal-cancel" class="btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Download choice modal -->
+  <div id="download-modal" class="modal hidden" aria-hidden="true" style="display:none">
+    <div class="modal-backdrop"></div>
+    <div class="modal-card">
+      <h3>Download note</h3>
+      <p class="muted">Choose the format to download. "Docs" will preserve colored words from the preview.</p>
+      <label style="display:flex;align-items:center;gap:8px;margin-top:8px"><input type="checkbox" id="include-metadata"> Include metadata (date, device id, mappings)</label>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
+        <button id="download-txt" class="btn">Download .txt</button>
+        <button id="download-doc" class="btn">Download .doc</button>
+        <button id="download-docx" class="btn">Download .docx</button>
+        <button id="download-cancel" class="btn ghost">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast container -->
+  <div id="toast-container" aria-live="polite" style="position:fixed;right:20px;bottom:20px;z-index:9999"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
