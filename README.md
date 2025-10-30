@@ -1,4 +1,4 @@
-# Serene Notes — Local Note-taking App made by AI
+# Serene Notes — Local Note-taking App
 
 This project is a simple, client-side note-taking app that stores notes in your browser's localStorage and keys them to a device ID (or a manual serial you enter).
 
@@ -20,7 +20,7 @@ How to run
 
 Serving via Python (example):
 ```powershell
-cd 'C:\Website Projects\serene-cafe-website'
+cd 'C:\Website Projects\note-taking-app'
 python -m http.server 8000
 # open http://localhost:8000
 ```
@@ -40,7 +40,8 @@ There's a helper batch `detect-and-open.bat` that tries to detect your machine's
 
 Usage:
 ```powershell
-cd 'C:\Website Projects\serene-cafe-website'
+cd 'C:\Website Projects\note-taking-app'
 .\detect-and-open.bat
 
 ```
+
