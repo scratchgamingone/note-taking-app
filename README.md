@@ -20,7 +20,7 @@ How to run
 
 Serving via Python (example):
 ```powershell
-cd 'C:\Website Projects\note-taking-app'
+cd "C:\Website Projects\note-taking-app"
 python -m http.server 8000
 # Then open http://localhost:8000 in your browser
 ```
@@ -44,5 +44,6 @@ cd 'C:\Website Projects\note-taking-app'
 .\detect-and-open.bat
 
 ```
+
 
 
