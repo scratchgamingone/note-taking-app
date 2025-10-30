@@ -22,7 +22,7 @@ Serving via Python (example):
 ```powershell
 cd 'C:\Website Projects\note-taking-app'
 python -m http.server 8000
-# open http://localhost:8000
+# Then open http://localhost:8000 in your browser
 ```
 
 Notes on storage and privacy
@@ -44,4 +44,5 @@ cd 'C:\Website Projects\note-taking-app'
 .\detect-and-open.bat
 
 ```
+
 
